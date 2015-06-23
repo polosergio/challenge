@@ -1,0 +1,12 @@
+{
+  "name": "challenge",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Challenge in NodeJS",
+  "dependencies": {
+    "connect": "^3.4.0",
+    "minimist": "^1.1.1",
+    "sanitizer": "^0.1.2",
+    "webworker-threads": "^0.5.6"
+  }
+}
