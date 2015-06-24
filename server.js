@@ -14,7 +14,11 @@ var DEFAULT_PORT = 3000;
 app.use('/evaluate', function (req, res) {
     try {
         var query = querystring.parse(req._parsedUrl.query);
-        var expression = sanitizer.sanitize(query.expression.replace('=',''));
+        if (!query.expression) {
+            res.statusCode = 400;
+            throw Error('expression argument is required');
+        }
+        var expression = sanitizer.sanitize(query.expression.replace(/=| /g,''));
         var response = {
             result: evaluator.evaluate(expression)
         };
@@ -23,6 +27,7 @@ app.use('/evaluate', function (req, res) {
         res.end(JSON.stringify(response));
     } catch (e) {
         logger.log('Error: ' + e.message);
+        res.end(JSON.stringify({error: e.message}));
     }
 });
 
