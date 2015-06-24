@@ -18,22 +18,17 @@ app.use('/evaluate', function (req, res) {
         var expression;
 
         if (!query.expression) {
-            res.statusCode = 400;
             throw Error('expression argument is required');
         }
 
-        if (!/\d+\+\d+\=/.test(query.expression)) {
-            res.statusCode = 400;
-            throw Error('expression must follow format (x+y=)');
-        }
-
-        expression = sanitizer.sanitize(query.expression.replace(/=/g,''));
+        expression = sanitizer.sanitize(query.expression);
         response.result = evaluator.evaluate(expression)
         logger.log('Received expression: (' + query.expression + ') - Result:' + response.result);
 
         res.setHeader('Content-Type', 'application/json');
         res.end(JSON.stringify(response));
     } catch (e) {
+        res.statusCode = 400;
         logger.log('Error: ' + e.message);
         res.end(JSON.stringify({error: e.message}));
     }

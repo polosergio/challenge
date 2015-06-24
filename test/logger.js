@@ -1,11 +1,11 @@
 'use strict';
 
+var Logger = require('../utils/logger.js');
 var expect = require('expect.js');
 var fs = require('fs');
 var path = require('path');
 var testLog = 'logs/test.log';
 var randomLog = 'random/file.log';
-var Logger = require('../utils/logger.js');
 var loggerOne = Logger(testLog, {debug: false});
 var loggerTwo = Logger();
 
