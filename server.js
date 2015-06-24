@@ -12,18 +12,18 @@ var DEFAULT_PORT = 3000;
 
 
 app.use('/evaluate', function (req, res) {
-	try {
-		var query = querystring.parse(req._parsedUrl.query);
-		var expression = sanitizer.sanitize(query.expression.replace('=',''));
-		var response = {
-			result: evaluator.evaluate(expression)
-		};
-		logger.log('Received expression: (' + query.expression + ') - Result:' + response.result);
-		res.setHeader('Content-Type', 'application/json');
-		res.end(JSON.stringify(response));
-	} catch (e) {
-		logger.log('Error: ' + e.message);
-	}
+    try {
+        var query = querystring.parse(req._parsedUrl.query);
+        var expression = sanitizer.sanitize(query.expression.replace('=',''));
+        var response = {
+            result: evaluator.evaluate(expression)
+        };
+        logger.log('Received expression: (' + query.expression + ') - Result:' + response.result);
+        res.setHeader('Content-Type', 'application/json');
+        res.end(JSON.stringify(response));
+    } catch (e) {
+        logger.log('Error: ' + e.message);
+    }
 });
 
 http.createServer(app).listen(args.port || DEFAULT_PORT);
