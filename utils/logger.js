@@ -11,23 +11,39 @@ var path = require('path');
 /**
  * @constructor
  * @param {string} logFile
+ * @param {object} options
  */
-function Logger (logFile) {
+function Logger (logFile, options) {
+
+    if (!logFile) {
+        logFile = 'logs/general.log';
+    }
+
     var dir = path.dirname(logFile);
-    fs.lstat(dir, function(err, stats) {
-        if (err) {
-            fs.mkdir(dir);
-        }
-    });
+    var exists = fs.existsSync(dir);
+    var default_options = {
+        debug: true
+    };
+
+    if (!exists) {
+        fs.mkdirSync(dir);
+    }
+
     /** Log file path and name */
     this.logFile = logFile;
+
+    this.options = options || default_options;
 };
 
 /** Logs message to file/console */
 Logger.prototype.log = function (message) {
     var timestamp = new Date().toString();
     var entry = timestamp + ' - ' + message + '\n';
-    console.log(entry);
+
+    if (this.options.debug) {
+        console.log(entry);
+    }
+
     fs.appendFile(this.logFile, entry, function (error) {
         if (error) {
             return console.log(error);
@@ -36,7 +52,7 @@ Logger.prototype.log = function (message) {
 }
 
 /** Initializes and returns new Logger e.g. Logger('/logs/server.log') */
-module.exports = function (logFile) {
-    return new Logger(logFile);
+module.exports = function (logFile, options) {
+    return new Logger(logFile, options);
 };
 
