@@ -1,3 +1,5 @@
+//Generates a random expression and sends it as a request to a specified service to get it solved every set interval
+//Takes arguments --port and --delay e.g --port=3000 --delay=500 (ms)
 'use strict';
 
 var http = require('http');
@@ -9,13 +11,13 @@ var logger = require('./utils/logger')('logs/generator.log');
 
 setInterval(getResult, args.delay || DEFAULT_DELAY);
 
+/** Generates random expression and sends request to local service */
 function getResult () {
 	var timer = this;
 	var data = {
 		expression: getRandomNumber() + '+' + getRandomNumber() + '='
 	};
 	var options = {
-		hostname: '',
 		port: args.port || DEFAULT_PORT,
 		path: '/evaluate?' + querystring.stringify(data),
 		headers: {
@@ -40,6 +42,7 @@ function getResult () {
 		});
 }
 
+/** Returns random number. */
 function getRandomNumber() {
 	return Math.floor((Math.random() * 10) + 1);
 }

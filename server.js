@@ -2,7 +2,7 @@
 
 var http = require('http');
 var connect = require('connect');
-var Evaluator = require('./evaluator');
+var evaluator = require('./evaluator');
 var app = connect();
 var querystring = require('querystring');
 var sanitizer = require('sanitizer');
@@ -16,7 +16,7 @@ app.use('/evaluate', function (req, res) {
 		var query = querystring.parse(req._parsedUrl.query);
 		var expression = sanitizer.sanitize(query.expression.replace('=',''));
 		var response = {
-			result: Evaluator.evaluate(expression)
+			result: evaluator.evaluate(expression)
 		};
 		logger.log('Received expression: (' + query.expression + ') - Result:' + response.result);
 		res.setHeader('Content-Type', 'application/json');
