@@ -1,8 +1,15 @@
 'use strict';
 
 var fs = require('fs');
+var path = require('path');
 
 function Logger (logFile) {
+	var dir = path.dirname(logFile);
+	fs.lstat(dir, function(err, stats) {
+		if (err) {
+			fs.mkdir(dir);
+		}
+	});
 	this.logFile = logFile;
 };
 
@@ -17,5 +24,7 @@ Logger.prototype.log = function (message) {
 	});
 }
 
-module.exports = Logger;
+module.exports = function (logFile) {
+	return new Logger(logFile);
+};
 

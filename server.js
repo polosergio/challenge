@@ -7,8 +7,7 @@ var app = connect();
 var querystring = require('querystring');
 var sanitizer = require('sanitizer');
 var args = require('minimist')(process.argv.slice(2));
-var Logger = require('./utils/logger');
-var logger = new Logger('logs/server.log');
+var logger = require('./utils/logger')('logs/server.log');
 var DEFAULT_PORT = 3000;
 
 

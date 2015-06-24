@@ -5,8 +5,7 @@ var querystring = require('querystring');
 var args = require('minimist')(process.argv.slice(2));
 var DEFAULT_PORT = 3000;
 var DEFAULT_DELAY = 1000;
-var Logger = require('./utils/logger');
-var logger = new Logger('logs/generator.log');
+var logger = require('./utils/logger')('logs/generator.log');
 
 setInterval(getResult, args.delay || DEFAULT_DELAY);
 
@@ -31,7 +30,8 @@ function getResult () {
 					body += chunk;
 				})
 				.on('end', function () {
-					logger.log('Received result of ' + body);
+					var response = JSON.parse(body);
+					logger.log('Received result of ' + response.result + ' for expression (' + data.expression + ')');
 				});
 		})
 		.on('error', function (e) {
