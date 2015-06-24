@@ -13,37 +13,37 @@ setInterval(getResult, args.delay || DEFAULT_DELAY);
 
 /** Generates random expression and sends request to local service */
 function getResult () {
-	var timer = this;
-	var data = {
-		expression: getRandomNumber() + '+' + getRandomNumber() + '='
-	};
-	var options = {
-		port: args.port || DEFAULT_PORT,
-		path: '/evaluate?' + querystring.stringify(data),
-		headers: {
-			'Content-Type': 'application/json'
-		}
-	};
-	http
-		.get(options, function (res) {
-			var body = '';
-			res
-				.on('data', function (chunk) {
-					body += chunk;
-				})
-				.on('end', function () {
-					var response = JSON.parse(body);
-					logger.log('Received result of ' + response.result + ' for expression (' + data.expression + ')');
-				});
-		})
-		.on('error', function (e) {
-			clearInterval(timer);
-			logger.log('Error: ', e.message);
-		});
+    var timer = this;
+    var data = {
+        expression: getRandomNumber() + '+' + getRandomNumber() + '='
+    };
+    var options = {
+        port: args.port || DEFAULT_PORT,
+        path: '/evaluate?' + querystring.stringify(data),
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    };
+    http
+        .get(options, function (res) {
+            var body = '';
+            res
+                .on('data', function (chunk) {
+                    body += chunk;
+                })
+                .on('end', function () {
+                    var response = JSON.parse(body);
+                    logger.log('Received result of ' + response.result + ' for expression (' + data.expression + ')');
+                });
+        })
+        .on('error', function (e) {
+            clearInterval(timer);
+            logger.log('Error: ', e.message);
+        });
 }
 
 /** Returns random number. */
 function getRandomNumber() {
-	return Math.floor((Math.random() * 10) + 1);
+    return Math.floor((Math.random() * 10) + 1);
 }
 
