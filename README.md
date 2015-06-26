@@ -17,7 +17,7 @@ $ npm test
 ```
 
 ## Instructions
-* Running generators (requires different terminals per instance) defaults to port 3000 and delay 1000
+* Running generators (requires different terminals per instance) defaults to port 3000 and delay 1000(ms)
 ```sh
 $ node client.js --port=3000 --delay=1000
 ```
