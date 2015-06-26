@@ -7,7 +7,7 @@ var app = connect();
 var querystring = require('querystring');
 var sanitizer = require('sanitizer');
 var args = require('minimist')(process.argv.slice(2));
-var logger = require('./utils/logger')('logs/server.log');
+var log = require('./utils/log')('logs/server.log');
 var DEFAULT_PORT = 3000;
 
 
@@ -23,13 +23,13 @@ app.use('/evaluate', function (req, res) {
 
         expression = sanitizer.sanitize(query.expression);
         response.result = evaluator.evaluate(expression)
-        logger.log('Received expression: (' + query.expression + ') - Result:' + response.result);
+        log.write('Received expression: (' + query.expression + ') - Result:' + response.result);
 
         res.setHeader('Content-Type', 'application/json');
         res.end(JSON.stringify(response));
     } catch (e) {
         res.statusCode = 400;
-        logger.log('Error: ' + e.message);
+        log.write('Error: ' + e.message);
         res.end(JSON.stringify({error: e.message}));
     }
 });

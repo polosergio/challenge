@@ -1,6 +1,6 @@
 /**
  * Logs to file/console
- * @module logger
+ * @module log
  */
 
 'use strict';
@@ -13,7 +13,7 @@ var path = require('path');
  * @param {string} logFile
  * @param {object} options
  */
-function Logger (logFile, options) {
+function Log (logFile, options) {
 
     if (!logFile) {
         logFile = 'logs/general.log';
@@ -36,7 +36,7 @@ function Logger (logFile, options) {
 };
 
 /** Logs message to file/console */
-Logger.prototype.log = function (message) {
+Log.prototype.write = function (message) {
     var timestamp = new Date().toString();
     var entry = timestamp + ' - ' + message + '\n';
 
@@ -53,6 +53,6 @@ Logger.prototype.log = function (message) {
 
 /** Initializes and returns new Logger e.g. Logger('/logs/server.log') */
 module.exports = function (logFile, options) {
-    return new Logger(logFile, options);
+    return new Log(logFile, options);
 };
 

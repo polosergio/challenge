@@ -1,23 +1,23 @@
 'use strict';
 
-var Logger = require('../utils/logger.js');
+var Log = require('../utils/logger.js');
 var expect = require('expect.js');
 var fs = require('fs');
 var path = require('path');
 var testLog = 'logs/test.log';
 var randomLog = 'random/file.log';
-var loggerOne = Logger(testLog, {debug: false});
-var loggerTwo = Logger();
+var loggerOne = Log(testLog, {debug: false});
+var loggerTwo = Log();
 
 describe('Logging', function () {
     before(function () {
         fs.writeFile(testLog, '');
-        loggerOne.log('hello');
+        loggerOne.write('hello');
     });
     after(function () {
         fs.rmdirSync(path.dirname(randomLog));
     });
-    describe('Logger instance', function () {
+    describe('Log instance', function () {
         it('should initialize with a log file path', function () {
             expect(loggerOne.logFile).to.equal('logs/test.log');
         });
@@ -31,12 +31,12 @@ describe('Logging', function () {
             exists = fs.existsSync(path.dirname(randomLog));
             expect(exists).to.be(false);
 
-            loggerThree = Logger(randomLog);
+            loggerThree = Log(randomLog);
             exists = fs.existsSync(path.dirname(randomLog));
             expect(exists).to.be(true);
         });
     });
-    describe('Logger - log function', function () {
+    describe('Log - write function', function () {
         it('should log a message to the file specified', function () {
             var fileContents;
             fileContents = fs.readFileSync(testLog, {encoding: 'utf-8'});
