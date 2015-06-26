@@ -1,6 +1,6 @@
 'use strict';
 
-var Log = require('../utils/logger.js');
+var Log = require('../utils/log.js');
 var expect = require('expect.js');
 var fs = require('fs');
 var path = require('path');

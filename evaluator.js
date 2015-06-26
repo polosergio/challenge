@@ -7,6 +7,7 @@
 var vm = require('vm');
 
 module.exports = {
+    /** Validates if expression follows format of x+y= */
     isValid: function (expression) {
         return /^\d+\+\d+\=$/.test(expression);
     },

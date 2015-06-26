@@ -9,15 +9,28 @@ describe('Evaluating expressions', function () {
             expect(evaluator.evaluate).to.be.a('function');
         });
 
+        it('should contain isValid function', function () {
+            expect(evaluator.isValid).to.be.a('function');
+        });
+    });
+
+    describe('Evaluator - isValid function', function () {
+        it('should return false if expression does not follow required format', function () {
+            var expression = 'invalid';
+            expect(evaluator.isValid(expression)).to.be(false);
+        });
+
+        it('should return true if expression follows required format', function () {
+            var expression = '2+3=';
+            expect(evaluator.isValid(expression)).to.be(true);
+        });
+    });
+
+    describe('Evaluator - evaluate function', function () {
         it('should evaluate passed expressions', function () {
             var expression = '2+3=';
             expect(evaluator.evaluate(expression)).to.equal(5);
         });
-
-        it('should throw an error if expression does not follow required format', function () {
-            var expression = 'invalid';
-            expect(evaluator.evaluate).withArgs(expression).to.throwError();
-        })
     });
 });
 
