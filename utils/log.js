@@ -51,7 +51,7 @@ Log.prototype.write = function (message) {
     });
 }
 
-/** Initializes and returns new Logger e.g. Logger('/logs/server.log') */
+/** Initializes and returns new Log instance e.g. Log('/logs/server.log') */
 module.exports = function (logFile, options) {
     return new Log(logFile, options);
 };

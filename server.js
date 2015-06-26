@@ -22,6 +22,11 @@ app.use('/evaluate', function (req, res) {
         }
 
         expression = sanitizer.sanitize(query.expression);
+
+        if (!evaluator.isValid(expression)) {
+            throw Error('expression must follow format (x+y=)');
+        }
+
         response.result = evaluator.evaluate(expression)
         log.write('Received expression: (' + query.expression + ') - Result:' + response.result);
 
